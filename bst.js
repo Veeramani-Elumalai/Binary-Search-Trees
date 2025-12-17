@@ -6,7 +6,7 @@ class Node {
   }
 }
 
-class Tree {
+export class Tree {
   constructor(arr) {
     const sorted = [...arr].sort((a, b) => a - b);
     const unique = this.removeDuplicates(sorted);
@@ -94,20 +94,57 @@ class Tree {
     }
   }
 
-  levelOrderTraversal (node = this.root) {
-    if (node === null) return null;
-    let queue = [];
-    let result = [];
+  levelOrderForEach(callback) {
+    if (typeof callback !== "function") {
+      throw new Error("Callback function is required");
+    }
 
-    queue.push(node);
-    while(queue.length > 0 ){
+    if (this.root === null) return;
+
+    const queue = [];
+    queue.push(this.root);
+
+    while (queue.length > 0) {
       const current = queue.shift();
-      result.push(current.data)
+
+      callback(current);
 
       if (current.left !== null) queue.push(current.left);
       if (current.right !== null) queue.push(current.right);
     }
-    return result;
+  }
+
+  inOrderForEach(callback, node = this.root) {
+    if (typeof callback !== "function") {
+      throw new Error("Callback function is required");
+    }
+
+    if (node === null) return;
+    this.inOrderForEach(callback, node.left);
+    callback(node);
+    this.inOrderForEach(callback, node.right);
+  }
+
+  preOrderForEach(callback, node = this.root) {
+    if (typeof callback !== 'function') {
+      throw new Error("Callback function is required");
+    }
+
+    if (node === null) return;
+    callback(node);
+    this.preOrderForEach(callback, node.left);
+    this.preOrderForEach(callback, node.right);
+  }
+
+  postOrderForEach(callback, node = this.root) {
+    if ( typeof callback !== "function") {
+      throw new Error("Callback function is required");
+    }
+
+    if(node === null) return;
+    this.postOrderForEach(callback, node.left);
+    this.postOrderForEach(callback, node.right);
+    callback(node);
   }
 
   prettyPrint(node = this.root, prefix = '', isLeft = true) {
@@ -155,8 +192,29 @@ const tree = new Tree([
 // console.log("Find 8:", tree.find(8));
 // console.log("Find 1000:", tree.find(1000));
 
-console.log(tree.levelOrderTraversal());
+// const bfs = [];
+// tree.levelOrderForEach(node => {
+//   bfs.push(node.data);
+// })
+// console.log(`Level Order Traversal :${bfs}`);
 
+const inOrder = [];
+tree.inOrderForEach(node => {
+  inOrder.push(node.data);
+});
+console.log(`Inorder Traversal :${inOrder}`);
+
+const preOrder = [];
+tree.preOrderForEach(node => {
+  preOrder.push(node.data);
+});
+console.log(`Preorder Traversal :${preOrder}`);
+
+const postOrder = [];
+tree.postOrderForEach(node => {
+  postOrder.push(node.data);
+});
+console.log(`Postorder Traversal :${postOrder}`);
 
 
 
