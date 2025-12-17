@@ -83,6 +83,17 @@ class Tree {
     return current;
   }
 
+  find(value, node = this.root){
+    if (node === null) return null;
+    if (node.data === value) return node;
+
+    if(value < node.data) {
+      return this.find(value, node.left);
+    } else {
+      return this.find(value, node.right);
+    }
+  }
+
   prettyPrint(node = this.root, prefix = '', isLeft = true) {
     if (node === null) return;
 
@@ -123,6 +134,10 @@ tree.delete(8);
 
 console.log("\nAfter deleting 42:");
 tree.prettyPrint();
+
+console.log("Find 42:", tree.find(42));
+console.log("Find 8:", tree.find(8));
+console.log("Find 1000:", tree.find(1000));
 
 
 
