@@ -94,6 +94,22 @@ class Tree {
     }
   }
 
+  levelOrderTraversal (node = this.root) {
+    if (node === null) return null;
+    let queue = [];
+    let result = [];
+
+    queue.push(node);
+    while(queue.length > 0 ){
+      const current = queue.shift();
+      result.push(current.data)
+
+      if (current.left !== null) queue.push(current.left);
+      if (current.right !== null) queue.push(current.right);
+    }
+    return result;
+  }
+
   prettyPrint(node = this.root, prefix = '', isLeft = true) {
     if (node === null) return;
 
@@ -122,22 +138,25 @@ const tree = new Tree([
   1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324
 ]);
 
-console.log("Before insert:");
-tree.prettyPrint();
+// console.log("Before insert:");
+// tree.prettyPrint();
 
-tree.insert(42);
+// tree.insert(42);
 
-console.log("\nAfter insert:");
-tree.prettyPrint();
+// console.log("\nAfter insert:");
+// tree.prettyPrint();
 
-tree.delete(8);
+// tree.delete(8);
 
-console.log("\nAfter deleting 42:");
-tree.prettyPrint();
+// console.log("\nAfter deleting 42:");
+// tree.prettyPrint();
 
-console.log("Find 42:", tree.find(42));
-console.log("Find 8:", tree.find(8));
-console.log("Find 1000:", tree.find(1000));
+// console.log("Find 42:", tree.find(42));
+// console.log("Find 8:", tree.find(8));
+// console.log("Find 1000:", tree.find(1000));
+
+console.log(tree.levelOrderTraversal());
+
 
 
 
