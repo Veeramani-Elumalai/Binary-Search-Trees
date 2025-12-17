@@ -147,6 +147,28 @@ export class Tree {
     callback(node);
   }
 
+  height(node = this.root) {
+    if (node === null) return -1;
+
+    const leftHeight = this.height(node.left);
+    const rightHeight = this.height(node.right);
+
+    return Math.max(leftHeight, rightHeight) + 1;
+  }
+  
+  depth(value, node = this.root, level = 0) {
+    if (node === null) return null;
+
+    if (node.data === value) return level;
+
+    if (value < node.data) {
+      return this.depth(value, node.left, level + 1);
+    } else {
+      return this.depth(value, node.right, level + 1);
+    }
+  }
+
+
   prettyPrint(node = this.root, prefix = '', isLeft = true) {
     if (node === null) return;
 
@@ -198,23 +220,25 @@ const tree = new Tree([
 // })
 // console.log(`Level Order Traversal :${bfs}`);
 
-const inOrder = [];
-tree.inOrderForEach(node => {
-  inOrder.push(node.data);
-});
-console.log(`Inorder Traversal :${inOrder}`);
+// const inOrder = [];
+// tree.inOrderForEach(node => {
+//   inOrder.push(node.data);
+// });
+// console.log(`Inorder Traversal :${inOrder}`);
 
-const preOrder = [];
-tree.preOrderForEach(node => {
-  preOrder.push(node.data);
-});
-console.log(`Preorder Traversal :${preOrder}`);
+// const preOrder = [];
+// tree.preOrderForEach(node => {
+//   preOrder.push(node.data);
+// });
+// console.log(`Preorder Traversal :${preOrder}`);
 
-const postOrder = [];
-tree.postOrderForEach(node => {
-  postOrder.push(node.data);
-});
-console.log(`Postorder Traversal :${postOrder}`);
+// const postOrder = [];
+// tree.postOrderForEach(node => {
+//   postOrder.push(node.data);
+// });
+// console.log(`Postorder Traversal :${postOrder}`);
+
+console.log(tree.height(8))
 
 
 
