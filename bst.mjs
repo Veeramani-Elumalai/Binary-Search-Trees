@@ -155,7 +155,7 @@ export class Tree {
 
     return Math.max(leftHeight, rightHeight) + 1;
   }
-  
+
   depth(value, node = this.root, level = 0) {
     if (node === null) return null;
 
@@ -168,6 +168,29 @@ export class Tree {
     }
   }
 
+  isBalanced(node = this.root) {
+    if (node === null) return true;
+
+    const leftHeight = this.height(node.left);
+    const rightHeight = this.height(node.right);
+
+    if (Math.abs(leftHeight - rightHeight) > 1) return false;
+
+    return (
+      this.isBalanced(node.left) &&
+      this.isBalanced(node.right)
+    );
+  }
+
+rebalance() {
+  const values = [];
+
+  this.inOrderForEach(node => {
+    values.push(node.data);
+  });
+
+  this.root = this.buildTree(values);
+}
 
   prettyPrint(node = this.root, prefix = '', isLeft = true) {
     if (node === null) return;
@@ -193,9 +216,9 @@ export class Tree {
 }
 
 /* ===== TEST ===== */
-const tree = new Tree([
-  1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324
-]);
+// const tree = new Tree([
+//   1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324
+// ]);
 
 // console.log("Before insert:");
 // tree.prettyPrint();
@@ -238,7 +261,10 @@ const tree = new Tree([
 // });
 // console.log(`Postorder Traversal :${postOrder}`);
 
-console.log(tree.height(8))
+// console.log(tree.height(8));
 
+// console.log(tree.isBalanced());
+
+console
 
 
